@@ -6,20 +6,6 @@ URL = "https://www.supergoku.com/dragon-ball-super-{}-sub-espanol/"
 URL2 = "https://www.supergoku.com/dragon-ball-super-capitulo-{}-sub-espanol/"
 HEADERS = {'User-agent': 'Mozilla/5.0'}
 
-def decript_url(crip_url):
-    page = requests.post("http://www.linkexpander.com/get_url.php",
-                         headers=HEADERS,
-                         data={'url': crip_url})
-    soup = BeautifulSoup(page.content, "html.parser")
-    url = soup.find(text=True)
-    return url
-
-def range_eps(start, end):
-    res = {}
-    for i in range(start, end + 1):
-        res[i] = single_eps(eps_num)
-    return res
-
 def single_eps(eps_num):
     try:
         eps_str = str(eps_num)
@@ -41,5 +27,16 @@ def single_eps(eps_num):
     except:
         return "Something gone wrong :("
 
-pprint(range_eps(68,69))
-pprint(single_eps(68))
+def range_eps(start, end):
+    res = {}
+    for i in range(start, end + 1):
+        res[i] = single_eps(i)
+    return res
+
+def decript_url(crip_url):
+    page = requests.post("http://www.linkexpander.com/get_url.php",
+                         headers=HEADERS,
+                         data={'url': crip_url})
+    soup = BeautifulSoup(page.content, "html.parser")
+    url = soup.find(text=True)
+    return url
